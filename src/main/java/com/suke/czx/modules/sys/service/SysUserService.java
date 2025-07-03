@@ -1,29 +1,16 @@
 package com.suke.czx.modules.sys.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.suke.czx.modules.sys.entity.SysRole;
 import com.suke.czx.modules.sys.entity.SysUser;
 
+import java.util.Set;
 
-/**
- * 系统用户
- *
- * @author czx
- * @email object_czx@163.com
- * @date 2016年9月18日 上午9:43:39
- */
 public interface SysUserService extends IService<SysUser> {
-
-    /**
-     * 修改密码
-     *
-     * @param userId      用户ID
-     * @param password    原密码
-     * @param newPassword 新密码
-     */
+    SysUser queryByUserName(String username);
+    Set<SysRole> findUserRoles(String userId);
+    void saveUser(SysUser user);
+    void updateUser(SysUser user);
+    void deleteBatch(String[] userIds);
     int updatePassword(String userId, String password, String newPassword);
-
-    void saveUserRole(SysUser user);
-
-    void updateUserRole(SysUser user);
-
 }

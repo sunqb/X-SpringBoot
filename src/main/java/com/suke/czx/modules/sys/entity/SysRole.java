@@ -16,12 +16,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-/**
- * 角色
- *
- * @author czx
- * @email object_czx@163.com
- */
 @Data
 @ApiModel(value = "角色")
 @TableName("sys_role")
@@ -41,7 +35,7 @@ public class SysRole implements Serializable {
     public String remark;
 
     @ApiModelProperty(value = "创建者ID")
-    public String createUserId;
+    public Long createUserId;
 
     @TableField(exist = false)
     @ApiModelProperty(value = "创建者名称")

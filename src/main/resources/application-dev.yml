@@ -2,6 +2,6 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: PP55PP55
-    url: jdbc:mysql://192.168.0.201:3306/x_springboot?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true
+    username: njfe9jje
+    password: 2Yjc8oUTijNrQoVi
+    url: jdbc:mysql://mysql.sqlpub.com:3306/sunqb_db?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true

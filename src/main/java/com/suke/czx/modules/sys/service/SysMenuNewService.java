@@ -5,15 +5,9 @@ import com.suke.czx.modules.sys.entity.SysMenuNew;
 import com.suke.czx.modules.sys.vo.SysMenuNewVO;
 
 import java.util.List;
+import java.util.Set;
 
-
-/**
- * 菜单管理
- *
- * @author czx
- * @email object_czx@163.com
- */
 public interface SysMenuNewService extends IService<SysMenuNew> {
-
-	List<SysMenuNewVO> getUserMenu();
+    List<SysMenuNewVO> getUserMenuList(String userId);
+    Set<String> findUserPermissions(String userId);
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.suke.czx.modules.sys.mapper.SysMenuNewMapper">
+
+	<select id="queryUserAllMenu" resultType="com.suke.czx.modules.sys.entity.SysMenuNew">
+		select distinct m.* from sys_user_role ur
+			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id
+			LEFT JOIN sys_menu_new m on rm.menu_id = m.menu_id
+		where ur.user_id = #{userId}
+	</select>
+
+	<select id="queryAllPerms" resultType="java.lang.String">
+		select m.perms from sys_user_role ur
+			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id
+			LEFT JOIN sys_menu_new m on rm.menu_id = m.menu_id
+		<where>
+			<if test="userId != null">
+				ur.user_id = #{userId}
+			</if>
+		</where>
+	</select>
+
+</mapper>

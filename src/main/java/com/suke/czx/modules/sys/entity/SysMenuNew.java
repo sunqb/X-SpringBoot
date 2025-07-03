@@ -1,44 +1,64 @@
 package com.suke.czx.modules.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.suke.czx.common.utils.TreeNode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
-/**
- * @Description //TODO $
- * @Date 12:26
- * @Author yzcheng90@qq.com
- **/
 @Data
 @TableName("sys_menu_new")
 @ApiModel(value = "菜单管理")
-public class SysMenuNew implements Serializable {
+public class SysMenuNew implements Serializable, TreeNode<SysMenuNew> {
 
     @TableId(value = "menu_id", type = IdType.AUTO)
     @ApiModelProperty(value = "菜单ID")
-    public Long menuId;
+    private Long menuId;
 
     @ApiModelProperty(value = "父菜单ID，一级菜单为0")
-    public Long parentId;
+    private Long parentId;
 
-    public String path;
-    public String name;
-    public String component;
-    public String redirect;
-    public String title;
-    public String isLink;
-    public boolean isHide;
-    public boolean isKeepAlive;
-    public boolean isAffix;
-    public boolean isIframe;
-    public String icon;
-    public String roles;
-    public int orderSort;
-    public boolean disabled;
+    private String path;
+    private String name;
+    private String component;
+    private String redirect;
+    private String title;
+    private String isLink;
+    private boolean isHide;
+    private boolean isKeepAlive;
+    private boolean isAffix;
+    private boolean isIframe;
+    private String icon;
+    private String roles;
+    private int orderSort;
+    private boolean disabled;
 
+    @TableField(exist = false)
+    private List<SysMenuNew> children;
+
+    @Override
+    public Long getId() {
+        return this.menuId;
+    }
+
+    @Override
+    public Long getParentId() {
+        return this.parentId;
+    }
+
+    @Override
+    public void setChildren(List<SysMenuNew> children) {
+        this.children = children;
+    }
+
+    @Override
+    public List<SysMenuNew> getChildren() {
+        return this.children;
+    }
 }

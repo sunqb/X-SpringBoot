@@ -55,10 +55,9 @@ public class TbApkVersionController extends AbstractController {
     @ApiOperation(value = "新增APK版本管理数据")
     @SysLog("新增APK版本管理数据")
     @PostMapping("/save")
-    public R save(@RequestBody TbApkVersion param) {
-        param.setCreateTime(new Date());
-        param.setUserId(getUserId());
-        tbApkVersionService.save(param);
+    public R save(@RequestBody TbApkVersion tbApkVersion){
+        tbApkVersion.setCreateUserId(Long.parseLong(getUserId()));
+		tbApkVersionService.save(tbApkVersion);
         return R.ok();
     }
 

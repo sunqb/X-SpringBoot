@@ -1,12 +1,14 @@
 package com.suke.czx.common.aspect;
 
-import cn.hutool.core.map.MapUtil;
+import cn.dev33.satoken.stp.StpUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.suke.czx.common.utils.HttpContextUtils;
 import com.suke.czx.common.utils.IPUtils;
 import com.suke.czx.modules.sys.entity.SysLog;
+import com.suke.czx.modules.sys.entity.SysUser;
 import com.suke.czx.modules.sys.service.SysLogService;
+import com.suke.czx.modules.sys.service.SysUserService;
 import lombok.SneakyThrows;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -14,18 +16,16 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.Date;
-import java.util.HashMap;
 
 
 /**
  * 系统日志，切面处理类
- * 
+ *
  * @author czx
  * @email object_czx@163.com
  * @date 2017年3月8日 上午11:07:35
@@ -36,11 +36,14 @@ public class SysLogAspect {
 	@Autowired
 	private SysLogService sysLogService;
 
+	@Autowired
+	private SysUserService sysUserService;
+
 	private ObjectMapper objectMapper = new ObjectMapper();
-	
+
 	@Pointcut("@annotation(com.suke.czx.common.annotation.SysLog)")
-	public void logPointCut() { 
-		
+	public void logPointCut() {
+
 	}
 
 	@Around("logPointCut()")
@@ -89,11 +92,10 @@ public class SysLogAspect {
 		sysLog.setIp(IPUtils.getIpAddr(request));
 
 		//用户名
-		// String username = ((CustomUserDetailsUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername(); 强转有问题...原因有待研究
-		String userStr = objectMapper.writeValueAsString(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-		HashMap<String,Object> userDetailsUser = objectMapper.readValue(userStr,HashMap.class);
-		String username = MapUtil.getStr(userDetailsUser,"username");
-		sysLog.setUsername(username);
+		if(StpUtil.isLogin()){
+			SysUser user = sysUserService.getById(StpUtil.getLoginIdAsLong());
+			sysLog.setUsername(user.getUsername());
+		}
 
 		sysLog.setTime(time);
 		sysLog.setCreateDate(new Date());

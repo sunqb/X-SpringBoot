@@ -1,5 +1,7 @@
 package com.suke.czx.common.exception;
 
+import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.exception.NotPermissionException;
 import com.suke.zhjg.common.autofull.util.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
@@ -50,6 +52,25 @@ public class RRExceptionHandler extends R {
         log.error("参数JSON解析错误:", e);
         return R.error("参数JSON解析错误");
     }
+
+    /**
+     * Sa-Token 未登录异常
+     */
+    @ExceptionHandler(NotLoginException.class)
+    public R handleNotLoginException(NotLoginException e) {
+        log.warn("未登录:{}", e.getMessage());
+        return R.error(HttpStatus.UNAUTHORIZED.value(), "请先登录");
+    }
+
+    /**
+     * Sa-Token 权限不足异常
+     */
+    @ExceptionHandler(NotPermissionException.class)
+    public R handleNotPermissionException(NotPermissionException e) {
+        log.warn("权限不足:{}", e.getMessage());
+        return R.error(HttpStatus.FORBIDDEN.value(), "没有权限，请联系管理员授权");
+    }
+
 
     @ExceptionHandler(Exception.class)
     public R handleException(Exception e) {

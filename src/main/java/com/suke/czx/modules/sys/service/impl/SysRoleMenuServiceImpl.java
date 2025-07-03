@@ -1,20 +1,19 @@
 package com.suke.czx.modules.sys.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.suke.czx.modules.sys.entity.SysRoleMenu;
 import com.suke.czx.modules.sys.mapper.SysRoleMenuMapper;
 import com.suke.czx.modules.sys.service.SysRoleMenuService;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 
-/**
- * 角色与菜单对应关系
- *
- * @author czx
- * @email object_czx@163.com
- * @date 2016年9月18日 上午9:44:35
- */
 @Service
 public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRoleMenu> implements SysRoleMenuService {
 
+    @Override
+    public void deleteByRoleIds(Long[] roleIds) {
+        baseMapper.delete(new QueryWrapper<SysRoleMenu>().lambda().in(SysRoleMenu::getRoleId, Arrays.asList(roleIds)));
+    }
 }
